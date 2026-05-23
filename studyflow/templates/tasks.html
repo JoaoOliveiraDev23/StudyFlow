@@ -1,0 +1,188 @@
+{% extends 'base.html' %}
+{% block title %}Tarefas — StudyFlow{% endblock %}
+
+{% block content %}
+
+<!-- Cabeçalho -->
+<div class="d-flex justify-content-between align-items-start flex-wrap gap-3 mb-4">
+  <div class="page-header mb-0">
+    <h1 class="page-title">
+      <i class="bi bi-list-task me-2"></i>Tarefas
+    </h1>
+    <p class="page-subtitle mb-0">Gerencie todas as suas tarefas acadêmicas</p>
+  </div>
+  <a href="{{ url_for('tasks.new_task') }}" class="btn btn-primary align-self-start">
+    <i class="bi bi-plus-lg me-1"></i>Nova Tarefa
+  </a>
+</div>
+
+<!-- Filtros -->
+<div class="card sf-card mb-4">
+  <div class="card-body">
+    <form method="GET" action="{{ url_for('tasks.list_tasks') }}" class="row g-3 align-items-end">
+      <div class="col-12 col-md-5">
+        <label for="subject" class="form-label fw-medium small">
+          <i class="bi bi-book me-1"></i>Filtrar por Disciplina
+        </label>
+        <select name="subject" id="subject" class="form-select sf-select">
+          <option value="">Todas as disciplinas</option>
+          {% for subj in all_subjects %}
+            <option value="{{ subj }}" {% if filter_subject == subj %}selected{% endif %}>
+              {{ subj }}
+            </option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="col-12 col-md-4">
+        <label for="status" class="form-label fw-medium small">
+          <i class="bi bi-funnel me-1"></i>Filtrar por Status
+        </label>
+        <select name="status" id="status" class="form-select sf-select">
+          <option value="">Todos os status</option>
+          {% for opt in status_options %}
+            <option value="{{ opt }}" {% if filter_status == opt %}selected{% endif %}>{{ opt }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="col-12 col-md-3 d-flex gap-2">
+        <button type="submit" class="btn btn-primary flex-grow-1">
+          <i class="bi bi-search me-1"></i>Filtrar
+        </button>
+        <a href="{{ url_for('tasks.list_tasks') }}" class="btn btn-outline-secondary">
+          <i class="bi bi-x-lg"></i>
+        </a>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Tabela de tarefas -->
+<div class="card sf-card">
+  <div class="card-header sf-card-header d-flex justify-content-between align-items-center">
+    <h6 class="mb-0 fw-semibold">
+      <i class="bi bi-table me-2 text-primary"></i>
+      {{ tasks | length }} tarefa{% if tasks | length != 1 %}s{% endif %} encontrada{% if tasks | length != 1 %}s{% endif %}
+    </h6>
+  </div>
+
+  {% if tasks %}
+  <div class="table-responsive">
+    <table class="table sf-table mb-0">
+      <thead>
+        <tr>
+          <th>Título</th>
+          <th>Disciplina</th>
+          <th>Entrega</th>
+          <th>Prioridade</th>
+          <th>Status</th>
+          <th class="text-center">Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for task in tasks %}
+        <tr class="{% if task.is_overdue() %}row-overdue{% endif %}">
+          <td>
+            <div class="fw-medium">{{ task.title }}</div>
+            {% if task.description %}
+              <div class="text-muted small text-truncate" style="max-width:220px;">
+                {{ task.description }}
+              </div>
+            {% endif %}
+          </td>
+          <td>
+            <span class="badge bg-light text-dark border">{{ task.subject }}</span>
+          </td>
+          <td>
+            {% if task.is_overdue() %}
+              <span class="text-danger fw-semibold">
+                <i class="bi bi-exclamation-circle me-1"></i>{{ task.due_date.strftime('%d/%m/%Y') }}
+              </span>
+            {% else %}
+              {{ task.due_date.strftime('%d/%m/%Y') }}
+            {% endif %}
+          </td>
+          <td>{{ task.priority | priority_badge | safe }}</td>
+          <td>{{ task.status | status_badge | safe }}</td>
+          <td class="text-center">
+            <div class="d-flex justify-content-center gap-1">
+              <a
+                href="{{ url_for('tasks.edit_task', task_id=task.id) }}"
+                class="btn btn-sm btn-outline-primary"
+                title="Editar"
+              >
+                <i class="bi bi-pencil"></i>
+              </a>
+              <!-- Botão de exclusão abre modal de confirmação -->
+              <button
+                type="button"
+                class="btn btn-sm btn-outline-danger"
+                title="Excluir"
+                data-bs-toggle="modal"
+                data-bs-target="#deleteModal"
+                data-task-id="{{ task.id }}"
+                data-task-title="{{ task.title }}"
+              >
+                <i class="bi bi-trash"></i>
+              </button>
+            </div>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  {% else %}
+  <div class="empty-state py-5">
+    <i class="bi bi-inbox display-4 text-muted"></i>
+    <p class="mt-3 text-muted">
+      {% if filter_subject or filter_status %}
+        Nenhuma tarefa encontrada com os filtros aplicados.
+      {% else %}
+        Nenhuma tarefa cadastrada ainda.
+      {% endif %}
+    </p>
+    <a href="{{ url_for('tasks.new_task') }}" class="btn btn-primary btn-sm">
+      <i class="bi bi-plus-lg me-1"></i>Cadastrar tarefa
+    </a>
+  </div>
+  {% endif %}
+
+</div>
+
+<!-- Modal de confirmação de exclusão -->
+<div
+  class="modal fade"
+  id="deleteModal"
+  tabindex="-1"
+  aria-labelledby="deleteModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content sf-modal">
+      <div class="modal-header border-0">
+        <h5 class="modal-title" id="deleteModalLabel">
+          <i class="bi bi-exclamation-triangle-fill text-danger me-2"></i>Confirmar Exclusão
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+      </div>
+      <div class="modal-body">
+        <p class="mb-1">Tem certeza que deseja excluir a tarefa:</p>
+        <p class="fw-semibold" id="deleteTaskTitle"></p>
+        <p class="text-muted small mb-0">Esta ação não pode ser desfeita.</p>
+      </div>
+      <div class="modal-footer border-0">
+        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+          <i class="bi bi-x-lg me-1"></i>Cancelar
+        </button>
+        <form id="deleteForm" method="POST">
+          <button type="submit" class="btn btn-danger">
+            <i class="bi bi-trash me-1"></i>Excluir
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

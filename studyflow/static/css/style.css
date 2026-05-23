@@ -1,0 +1,454 @@
+/* ==========================================================================
+   StudyFlow — Estilos Personalizados
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Variáveis CSS e Reset
+   -------------------------------------------------------------------------- */
+
+:root {
+  --sf-primary:      #4361ee;
+  --sf-primary-dark: #3350d4;
+  --sf-secondary:    #6c757d;
+  --sf-success:      #2ec4b6;
+  --sf-danger:       #e63946;
+  --sf-warning:      #f4a261;
+  --sf-info:         #48cae4;
+
+  --sf-bg:           #f0f4ff;
+  --sf-surface:      #ffffff;
+  --sf-border:       #dee2ef;
+
+  --sf-text:         #1a1d2e;
+  --sf-text-muted:   #6b7280;
+
+  --sf-radius:       12px;
+  --sf-radius-sm:    8px;
+  --sf-shadow:       0 2px 12px rgba(67, 97, 238, 0.08);
+  --sf-shadow-hover: 0 6px 24px rgba(67, 97, 238, 0.15);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background-color: var(--sf-bg);
+  color: var(--sf-text);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* --------------------------------------------------------------------------
+   Navbar
+   -------------------------------------------------------------------------- */
+
+#mainNav {
+  background: linear-gradient(135deg, #1a1d2e 0%, #2d3160 100%);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  padding: 0.75rem 0;
+}
+
+.brand-icon {
+  width: 36px;
+  height: 36px;
+  background: var(--sf-primary);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.brand-text {
+  font-size: 1.15rem;
+  letter-spacing: -0.3px;
+  color: #fff;
+}
+
+.nav-pill {
+  border-radius: 8px;
+  padding: 0.45rem 0.85rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: rgba(255,255,255,0.72) !important;
+  transition: background 0.2s, color 0.2s;
+}
+
+.nav-pill:hover,
+.nav-pill.active {
+  background: rgba(255,255,255,0.12) !important;
+  color: #fff !important;
+}
+
+.nav-pill-accent.active,
+.nav-pill-accent:hover {
+  background: var(--sf-primary) !important;
+  color: #fff !important;
+}
+
+/* --------------------------------------------------------------------------
+   Page Header
+   -------------------------------------------------------------------------- */
+
+.page-title {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--sf-text);
+  margin-bottom: 0.25rem;
+  letter-spacing: -0.4px;
+}
+
+.page-subtitle {
+  color: var(--sf-text-muted);
+  font-size: 0.9rem;
+  margin-bottom: 0;
+}
+
+/* --------------------------------------------------------------------------
+   Cards base
+   -------------------------------------------------------------------------- */
+
+.sf-card {
+  border: 1px solid var(--sf-border);
+  border-radius: var(--sf-radius);
+  box-shadow: var(--sf-shadow);
+  background: var(--sf-surface);
+  transition: box-shadow 0.2s;
+}
+
+.sf-card:hover {
+  box-shadow: var(--sf-shadow-hover);
+}
+
+.sf-card-header {
+  background: #f8f9ff;
+  border-bottom: 1px solid var(--sf-border);
+  padding: 0.9rem 1.25rem;
+  border-radius: var(--sf-radius) var(--sf-radius) 0 0 !important;
+}
+
+/* --------------------------------------------------------------------------
+   Stat Cards (Dashboard)
+   -------------------------------------------------------------------------- */
+
+.stat-card {
+  border-radius: var(--sf-radius);
+  padding: 1.25rem 1rem;
+  text-align: center;
+  transition: transform 0.2s, box-shadow 0.2s;
+  cursor: default;
+}
+
+.stat-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--sf-shadow-hover);
+}
+
+.stat-icon {
+  font-size: 1.8rem;
+  margin-bottom: 0.4rem;
+  opacity: 0.85;
+}
+
+.stat-value {
+  font-size: 2.2rem;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 0.3rem;
+  font-family: 'DM Mono', monospace;
+}
+
+.stat-label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  opacity: 0.75;
+}
+
+/* Variantes coloridas */
+.stat-card-primary {
+  background: linear-gradient(135deg, #eff2ff 0%, #dde4ff 100%);
+  border: 1px solid #c5cffa;
+  color: var(--sf-primary);
+}
+
+.stat-card-success {
+  background: linear-gradient(135deg, #e8faf8 0%, #c8f5f2 100%);
+  border: 1px solid #a0e9e4;
+  color: #1a9e95;
+}
+
+.stat-card-warning {
+  background: linear-gradient(135deg, #fff4e8 0%, #ffe0bd 100%);
+  border: 1px solid #f7c99a;
+  color: #c07020;
+}
+
+.stat-card-danger {
+  background: linear-gradient(135deg, #fef0f1 0%, #fcd6d9 100%);
+  border: 1px solid #f5aaaf;
+  color: var(--sf-danger);
+}
+
+/* --------------------------------------------------------------------------
+   Progress Bar
+   -------------------------------------------------------------------------- */
+
+.sf-progress {
+  height: 14px;
+  border-radius: 100px;
+  background-color: #e8ecf8;
+}
+
+.sf-progress .progress-bar {
+  background: linear-gradient(90deg, var(--sf-primary) 0%, #7c90fa 100%);
+  border-radius: 100px;
+  transition: width 1s ease;
+}
+
+.progress-badge {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--sf-primary);
+  background: #eff2ff;
+  padding: 0.2rem 0.65rem;
+  border-radius: 100px;
+  border: 1px solid #c5cffa;
+  font-family: 'DM Mono', monospace;
+}
+
+/* --------------------------------------------------------------------------
+   Tabela
+   -------------------------------------------------------------------------- */
+
+.sf-table {
+  font-size: 0.88rem;
+}
+
+.sf-table thead th {
+  background: #f8f9ff;
+  color: var(--sf-text-muted);
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  border-bottom: 1px solid var(--sf-border);
+  padding: 0.85rem 1rem;
+  white-space: nowrap;
+}
+
+.sf-table tbody td {
+  padding: 0.85rem 1rem;
+  vertical-align: middle;
+  border-bottom: 1px solid #f0f2f8;
+  color: var(--sf-text);
+}
+
+.sf-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.sf-table tbody tr:hover td {
+  background-color: #fafbff;
+}
+
+.row-overdue td {
+  background-color: #fff8f8 !important;
+}
+
+/* --------------------------------------------------------------------------
+   Badges de Prioridade e Status
+   -------------------------------------------------------------------------- */
+
+.badge-priority-alta {
+  background-color: #fce8e9;
+  color: #c0272d;
+  border: 1px solid #f5aaaf;
+}
+
+.badge-priority-media {
+  background-color: #fff4e0;
+  color: #b56a00;
+  border: 1px solid #f7c99a;
+}
+
+.badge-priority-baixa {
+  background-color: #e8faf8;
+  color: #1a9e95;
+  border: 1px solid #a0e9e4;
+}
+
+.badge-status-concluido {
+  background-color: #e8faf8;
+  color: #1a9e95;
+  border: 1px solid #a0e9e4;
+}
+
+.badge-status-andamento {
+  background-color: #e8f0ff;
+  color: #3451c7;
+  border: 1px solid #b5c5f8;
+}
+
+.badge-status-afazer {
+  background-color: #f2f3f7;
+  color: #6b7280;
+  border: 1px solid #d1d5de;
+}
+
+.badge {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  padding: 0.3em 0.7em;
+  border-radius: 6px;
+}
+
+/* --------------------------------------------------------------------------
+   Formulários
+   -------------------------------------------------------------------------- */
+
+.sf-input,
+.sf-select {
+  border: 1.5px solid var(--sf-border);
+  border-radius: var(--sf-radius-sm);
+  font-size: 0.9rem;
+  padding: 0.55rem 0.85rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  background-color: #fff;
+  color: var(--sf-text);
+}
+
+.sf-input:focus,
+.sf-select:focus {
+  border-color: var(--sf-primary);
+  box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.12);
+  outline: none;
+}
+
+.form-label {
+  font-size: 0.875rem;
+  margin-bottom: 0.35rem;
+  color: var(--sf-text);
+}
+
+/* --------------------------------------------------------------------------
+   Botões
+   -------------------------------------------------------------------------- */
+
+.btn-primary {
+  background-color: var(--sf-primary);
+  border-color: var(--sf-primary);
+  font-weight: 600;
+  font-size: 0.875rem;
+  border-radius: var(--sf-radius-sm);
+  transition: background 0.2s, box-shadow 0.2s, transform 0.1s;
+}
+
+.btn-primary:hover {
+  background-color: var(--sf-primary-dark);
+  border-color: var(--sf-primary-dark);
+  box-shadow: 0 4px 14px rgba(67, 97, 238, 0.35);
+  transform: translateY(-1px);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+.btn-outline-primary {
+  color: var(--sf-primary);
+  border-color: var(--sf-primary);
+  font-weight: 600;
+  font-size: 0.875rem;
+  border-radius: var(--sf-radius-sm);
+}
+
+.btn-outline-primary:hover {
+  background-color: var(--sf-primary);
+  border-color: var(--sf-primary);
+}
+
+.btn-outline-danger {
+  color: var(--sf-danger);
+  border-color: var(--sf-danger);
+  font-weight: 600;
+  font-size: 0.875rem;
+  border-radius: var(--sf-radius-sm);
+}
+
+.btn-danger {
+  background-color: var(--sf-danger);
+  border-color: var(--sf-danger);
+  font-weight: 600;
+  font-size: 0.875rem;
+  border-radius: var(--sf-radius-sm);
+}
+
+/* --------------------------------------------------------------------------
+   Modal
+   -------------------------------------------------------------------------- */
+
+.sf-modal {
+  border-radius: var(--sf-radius);
+  border: none;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+}
+
+/* --------------------------------------------------------------------------
+   Empty State
+   -------------------------------------------------------------------------- */
+
+.empty-state {
+  text-align: center;
+  padding: 3rem 1rem;
+}
+
+.empty-state i {
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+/* --------------------------------------------------------------------------
+   Alerts
+   -------------------------------------------------------------------------- */
+
+.alert {
+  border-radius: var(--sf-radius-sm);
+  font-size: 0.875rem;
+  border-left-width: 4px;
+}
+
+/* --------------------------------------------------------------------------
+   Footer
+   -------------------------------------------------------------------------- */
+
+.footer {
+  margin-top: auto;
+  background: #fff;
+  border-top: 1px solid var(--sf-border);
+}
+
+/* --------------------------------------------------------------------------
+   Responsividade extra
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 576px) {
+  .page-title {
+    font-size: 1.3rem;
+  }
+  .stat-value {
+    font-size: 1.8rem;
+  }
+  .sf-table {
+    font-size: 0.8rem;
+  }
+}

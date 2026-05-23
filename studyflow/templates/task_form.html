@@ -1,0 +1,151 @@
+{% extends 'base.html' %}
+{% block title %}{% if action == 'edit' %}Editar Tarefa{% else %}Nova Tarefa{% endif %} — StudyFlow{% endblock %}
+
+{% block content %}
+
+<!-- Cabeçalho -->
+<div class="page-header mb-4">
+  <h1 class="page-title">
+    <i class="bi bi-{% if action == 'edit' %}pencil-square{% else %}plus-circle{% endif %} me-2"></i>
+    {% if action == 'edit' %}Editar Tarefa{% else %}Nova Tarefa{% endif %}
+  </h1>
+  <p class="page-subtitle">
+    {% if action == 'edit' %}Atualize os dados da tarefa.{% else %}Preencha os campos para cadastrar uma nova tarefa.{% endif %}
+  </p>
+</div>
+
+<div class="row justify-content-center">
+  <div class="col-12 col-lg-8">
+    <div class="card sf-card">
+      <div class="card-body p-4">
+
+        <form
+          method="POST"
+          action="{% if action == 'edit' %}{{ url_for('tasks.edit_task', task_id=task.id) }}{% else %}{{ url_for('tasks.new_task') }}{% endif %}"
+          novalidate
+          id="taskForm"
+        >
+
+          <!-- Título -->
+          <div class="mb-3">
+            <label for="title" class="form-label fw-semibold">
+              Título <span class="text-danger">*</span>
+            </label>
+            <input
+              type="text"
+              id="title"
+              name="title"
+              class="form-control sf-input"
+              placeholder="Ex: Trabalho de Cálculo II"
+              value="{{ form_data.get('title', '') }}"
+              required
+              maxlength="150"
+            />
+            <div class="invalid-feedback">O título é obrigatório.</div>
+          </div>
+
+          <!-- Descrição -->
+          <div class="mb-3">
+            <label for="description" class="form-label fw-semibold">Descrição</label>
+            <textarea
+              id="description"
+              name="description"
+              class="form-control sf-input"
+              rows="3"
+              placeholder="Detalhes adicionais sobre a tarefa (opcional)"
+            >{{ form_data.get('description', '') }}</textarea>
+          </div>
+
+          <!-- Disciplina -->
+          <div class="mb-3">
+            <label for="subject" class="form-label fw-semibold">
+              Disciplina <span class="text-danger">*</span>
+            </label>
+            <input
+              type="text"
+              id="subject"
+              name="subject"
+              class="form-control sf-input"
+              placeholder="Ex: Algoritmos e Estruturas de Dados"
+              value="{{ form_data.get('subject', '') }}"
+              required
+              maxlength="100"
+            />
+            <div class="invalid-feedback">A disciplina é obrigatória.</div>
+          </div>
+
+          <div class="row g-3">
+
+            <!-- Data de entrega -->
+            <div class="col-12 col-md-4">
+              <label for="due_date" class="form-label fw-semibold">
+                Data de Entrega <span class="text-danger">*</span>
+              </label>
+              <input
+                type="date"
+                id="due_date"
+                name="due_date"
+                class="form-control sf-input"
+                value="{{ form_data.get('due_date', '') }}"
+                required
+              />
+              <div class="invalid-feedback">A data de entrega é obrigatória.</div>
+            </div>
+
+            <!-- Prioridade -->
+            <div class="col-12 col-md-4">
+              <label for="priority" class="form-label fw-semibold">
+                Prioridade <span class="text-danger">*</span>
+              </label>
+              <select id="priority" name="priority" class="form-select sf-select" required>
+                <option value="" disabled {% if not form_data.get('priority') %}selected{% endif %}>
+                  Selecione...
+                </option>
+                {% for opt in priority_options %}
+                  <option value="{{ opt }}" {% if form_data.get('priority') == opt %}selected{% endif %}>
+                    {{ opt }}
+                  </option>
+                {% endfor %}
+              </select>
+              <div class="invalid-feedback">Selecione a prioridade.</div>
+            </div>
+
+            <!-- Status -->
+            <div class="col-12 col-md-4">
+              <label for="status" class="form-label fw-semibold">
+                Status <span class="text-danger">*</span>
+              </label>
+              <select id="status" name="status" class="form-select sf-select" required>
+                <option value="" disabled {% if not form_data.get('status') %}selected{% endif %}>
+                  Selecione...
+                </option>
+                {% for opt in status_options %}
+                  <option value="{{ opt }}" {% if form_data.get('status') == opt %}selected{% endif %}>
+                    {{ opt }}
+                  </option>
+                {% endfor %}
+              </select>
+              <div class="invalid-feedback">Selecione o status.</div>
+            </div>
+
+          </div><!-- /row -->
+
+          <!-- Botões -->
+          <div class="d-flex justify-content-between align-items-center mt-4 pt-2 border-top">
+            <a href="{{ url_for('tasks.list_tasks') }}" class="btn btn-outline-secondary">
+              <i class="bi bi-arrow-left me-1"></i>Voltar
+            </a>
+            <button type="submit" class="btn btn-primary px-4">
+              <i class="bi bi-{% if action == 'edit' %}check-lg{% else %}plus-lg{% endif %} me-1"></i>
+              {% if action == 'edit' %}Salvar Alterações{% else %}Cadastrar Tarefa{% endif %}
+            </button>
+          </div>
+
+        </form>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
