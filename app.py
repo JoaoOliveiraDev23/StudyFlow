@@ -21,7 +21,7 @@ def create_app():
     )
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-    # Chave secreta para mensagens flash (altere em produção)
+    # Chave secreta para mensagens flash
     app.config['SECRET_KEY'] = 'studyflow-secret-key-2024'
 
     # Inicializa extensões
@@ -31,32 +31,36 @@ def create_app():
     app.register_blueprint(task_bp)
 
     # -------------------------------------------------------------------------
-    # Filtros Jinja2 — geram badges HTML coloridas para prioridade e status
+    # Filtros Jinja2 — badges para prioridade e status
     # -------------------------------------------------------------------------
 
     @app.template_filter('priority_badge')
     def priority_badge(priority):
-        """Retorna HTML de badge colorida conforme a prioridade."""
         mapping = {
-            'Alta':  ('badge-priority-alta',   'bi-arrow-up-circle-fill'),
-            'Média': ('badge-priority-media',  'bi-dash-circle-fill'),
-            'Baixa': ('badge-priority-baixa',  'bi-arrow-down-circle-fill'),
+            'Alta': ('badge-priority-alta', 'bi-arrow-up-circle-fill'),
+            'Média': ('badge-priority-media', 'bi-dash-circle-fill'),
+            'Baixa': ('badge-priority-baixa', 'bi-arrow-down-circle-fill'),
         }
         css_class, icon = mapping.get(priority, ('bg-secondary', 'bi-circle'))
-        return f'<span class="badge {css_class}"><i class="bi {icon} me-1"></i>{priority}</span>'
+        return (
+            f'<span class="badge {css_class}">'
+            f'<i class="bi {icon} me-1"></i>{priority}</span>'
+        )
 
     @app.template_filter('status_badge')
     def status_badge(status):
-        """Retorna HTML de badge colorida conforme o status."""
         mapping = {
-            'Concluído':    ('badge-status-concluido',  'bi-check-circle-fill'),
-            'Em Andamento': ('badge-status-andamento',  'bi-play-circle-fill'),
-            'A Fazer':      ('badge-status-afazer',     'bi-circle'),
+            'Concluído': ('badge-status-concluido', 'bi-check-circle-fill'),
+            'Em Andamento': ('badge-status-andamento', 'bi-play-circle-fill'),
+            'A Fazer': ('badge-status-afazer', 'bi-circle'),
         }
         css_class, icon = mapping.get(status, ('bg-secondary', 'bi-circle'))
-        return f'<span class="badge {css_class}"><i class="bi {icon} me-1"></i>{status}</span>'
+        return (
+            f'<span class="badge {css_class}">'
+            f'<i class="bi {icon} me-1"></i>{status}</span>'
+        )
 
-    # Cria as tabelas no banco de dados se não existirem
+    # Cria pasta e tabelas do banco se não existirem
     with app.app_context():
         os.makedirs(os.path.join(basedir, 'instance'), exist_ok=True)
         db.create_all()
@@ -64,7 +68,11 @@ def create_app():
     return app
 
 
-# Ponto de execução direto
-if __name__ == '__main__':
-    app = create_app()
-    app.run(debug=True)
+# Instância global para o Gunicorn (Render)
+app = create_app()
+
+
+# Execução local
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
