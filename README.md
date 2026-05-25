@@ -1,134 +1,129 @@
-# 📚 StudyFlow
+# StudyFlow
 
-> Sistema web para organização de estudos e gerenciamento de tarefas acadêmicas universitárias.
+Sistema web para organização de estudos e gerenciamento de tarefas acadêmicas, desenvolvido como Projeto Integrador para a UNIVESP.
 
----
+## Sobre
 
-## Descrição
+O StudyFlow foi criado para auxiliar estudantes na organização de suas atividades acadêmicas, permitindo o controle de tarefas, prazos, prioridades e acompanhamento do progresso dos estudos de forma simples e intuitiva.
 
-O **StudyFlow** permite que estudantes cadastrem, organizem e acompanhem suas tarefas acadêmicas com facilidade. O sistema oferece um dashboard com estatísticas em tempo real, filtros por disciplina e status, e indicadores visuais de prioridade e prazo.
+A proposta surgiu a partir da identificação das dificuldades enfrentadas por estudantes universitários na gestão de compromissos acadêmicos, trabalhos, provas e atividades extracurriculares.
 
----
+## Funcionalidades
 
-## Tecnologias Utilizadas
+* Cadastro de tarefas acadêmicas
+* Edição e exclusão de tarefas
+* Organização por disciplina
+* Definição de prioridades (Baixa, Média e Alta)
+* Controle de status (A Fazer, Em Andamento e Concluído)
+* Dashboard com indicadores de produtividade
+* Visualização de tarefas pendentes e concluídas
+* Identificação de tarefas vencidas
+* Barra de progresso baseada nas tarefas concluídas
+* Interface responsiva para desktop, tablet e dispositivos móveis
 
-| Camada     | Tecnologia                  |
-|------------|-----------------------------|
-| Backend    | Python 3, Flask             |
-| ORM        | Flask-SQLAlchemy, SQLAlchemy|
-| Banco      | SQLite                      |
-| Frontend   | HTML5, CSS3, Bootstrap 5    |
-| Scripts    | JavaScript puro             |
-| Ícones     | Bootstrap Icons             |
-| Fontes     | Google Fonts (Plus Jakarta Sans, DM Mono) |
+## Tecnologias
 
----
+* Python
+* Flask
+* SQLAlchemy
+* SQLite
+* HTML5
+* CSS3
+* JavaScript
+* Bootstrap 5
+* Git e GitHub
 
-## Estrutura do Projeto
+## Como Rodar
 
-```
-studyflow/
-├── app.py                  # Fábrica da aplicação Flask
-├── extensions.py           # Instância compartilhada do SQLAlchemy
-├── requirements.txt        # Dependências Python
-├── .gitignore
-├── README.md
-│
-├── models/
-│   ├── __init__.py
-│   └── task.py             # Modelo da tabela tasks
-│
-├── routes/
-│   ├── __init__.py
-│   └── task_routes.py      # Todas as rotas CRUD
-│
-├── templates/
-│   ├── base.html           # Layout base (navbar + footer)
-│   ├── dashboard.html      # Página inicial com estatísticas
-│   ├── tasks.html          # Listagem com filtros
-│   └── task_form.html      # Formulário de criação/edição
-│
-├── static/
-│   ├── css/
-│   │   └── style.css       # Estilos personalizados
-│   └── js/
-│       └── script.js       # Interações cliente
-│
-└── instance/
-    └── studyflow.db        # Banco de dados SQLite (gerado automaticamente)
-```
-
----
-
-## Como Instalar e Executar
-
-### 1. Clone o repositório
+Clone o repositório:
 
 ```bash
 git clone https://github.com/seu-usuario/studyflow.git
 cd studyflow
 ```
 
-### 2. Crie um ambiente virtual Python
+Crie e ative o ambiente virtual:
+
+### Windows
 
 ```bash
-# Linux / macOS
-python3 -m venv venv
-source venv/bin/activate
-
-# Windows
 python -m venv venv
 venv\Scripts\activate
 ```
 
-### 3. Instale as dependências
+### Linux / MacOS
 
 ```bash
-pip install -r requirements.txt
+python3 -m venv venv
+source venv/bin/activate
 ```
 
-### 4. Execute a aplicação
+Instale as dependências:
+
+```bash
+python -m pip install -r requirements.txt
+```
+
+Execute o projeto:
 
 ```bash
 python app.py
 ```
 
-### 5. Acesse no navegador
+Acesse no navegador:
 
+```text
+http://127.0.0.1:5000
 ```
-http://localhost:5000
+
+## Estrutura do Projeto
+
+```text
+studyflow/
+│
+├── app.py
+├── extensions.py
+├── requirements.txt
+│
+├── models/
+│   └── task.py
+│
+├── routes/
+│   └── task_routes.py
+│
+├── templates/
+│   ├── base.html
+│   ├── dashboard.html
+│   ├── tasks.html
+│   └── task_form.html
+│
+├── static/
+│   ├── css/
+│   │   └── style.css
+│   └── js/
+│       └── script.js
+│
+└── instance/
+    └── studyflow.db
 ```
 
-O banco de dados SQLite (`instance/studyflow.db`) será criado automaticamente na primeira execução.
+## Objetivo Acadêmico
 
----
+O projeto tem como objetivo aplicar conceitos estudados durante o curso, incluindo:
 
-## Rotas Disponíveis
+* Desenvolvimento Web com Framework
+* Banco de Dados Relacional
+* Programação Back-end
+* Interface Web Responsiva
+* Controle de Versão com Git
+* Trabalho Colaborativo em Equipe
 
-| Método | Rota                   | Descrição                  |
-|--------|------------------------|----------------------------|
-| GET    | `/`                    | Dashboard                  |
-| GET    | `/tasks`               | Listar tarefas             |
-| GET    | `/tasks/new`           | Formulário de cadastro     |
-| POST   | `/tasks/new`           | Salvar nova tarefa         |
-| GET    | `/tasks/edit/<id>`     | Formulário de edição       |
-| POST   | `/tasks/edit/<id>`     | Atualizar tarefa           |
-| POST   | `/tasks/delete/<id>`   | Excluir tarefa             |
+## Integrantes
 
----
+* João Pedro de Oliveira Rodrigues
+* João Victor Cavalcante Vilela 
+* Valdemir Fernandes da Silva Filho 
 
-## Funcionalidades
+## Disciplina
 
-- **Dashboard** com cards de estatísticas (total, pendentes, concluídas, vencidas) e barra de progresso animada
-- **Listagem** de tarefas em tabela responsiva com filtros por disciplina e status
-- **Cadastro** e **edição** de tarefas com validação de campos obrigatórios
-- **Exclusão** com confirmação via modal
-- **Badges** coloridas por prioridade (Alta/Média/Baixa) e status (A Fazer / Em Andamento / Concluído)
-- **Alertas automáticos** com auto-dismiss após 5 segundos
-- Interface totalmente **responsiva** (Desktop, Tablet, Celular)
-
----
-
-## Licença
-
-Projeto acadêmico — uso educacional.
+UNIVESP — PJI110 Projeto Integrador — Ano: 2026
