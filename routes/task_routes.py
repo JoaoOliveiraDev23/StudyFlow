@@ -25,8 +25,9 @@ def dashboard():
 
     # Cálculo das estatísticas
     total_tasks = len(all_tasks)
+    todo_tasks = sum(1 for t in all_tasks if t.status == 'A Fazer')
+    in_progress_tasks = sum(1 for t in all_tasks if t.status == 'Em Andamento')
     completed_tasks = sum(1 for t in all_tasks if t.status == 'Concluído')
-    pending_tasks = sum(1 for t in all_tasks if t.status != 'Concluído')
     overdue_tasks = sum(1 for t in all_tasks if t.is_overdue())
 
     # Percentual de conclusão (evita divisão por zero)
@@ -47,7 +48,8 @@ def dashboard():
         'dashboard.html',
         total_tasks=total_tasks,
         completed_tasks=completed_tasks,
-        pending_tasks=pending_tasks,
+        todo_tasks=todo_tasks,
+        in_progress_tasks=in_progress_tasks,
         overdue_tasks=overdue_tasks,
         completion_percentage=completion_percentage,
         upcoming_tasks=upcoming_tasks,
@@ -66,6 +68,7 @@ def list_tasks():
     # Lê os filtros enviados via query string
     filter_subject = request.args.get('subject', '').strip()
     filter_status = request.args.get('status', '').strip()
+    filter_overdue = request.args.get('overdue')
 
     query = Task.query
 
@@ -74,6 +77,9 @@ def list_tasks():
 
     if filter_status:
         query = query.filter(Task.status == filter_status)
+
+    if filter_overdue:
+        query = query.filter(Task.due_date < date.today(), Task.status != 'Concluído')
 
     tasks = query.order_by(Task.due_date.asc()).all()
 

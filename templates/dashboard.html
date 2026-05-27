@@ -15,36 +15,36 @@
 <div class="row g-3 mb-4">
 
   <div class="col-6 col-lg-3">
-    <div class="stat-card stat-card-primary h-100">
+    <a  href="{{ url_for('tasks.list_tasks', status='A Fazer') }}" class="stat-card stat-card-primary h-100 text-decoration-none d-block">
       <div class="stat-icon"><i class="bi bi-journals"></i></div>
-      <div class="stat-value">{{ total_tasks }}</div>
-      <div class="stat-label">Total de Tarefas</div>
-    </div>
+      <div class="stat-value">{{ todo_tasks }}</div>
+      <div class="stat-label">A Fazer</div>
+    </a>
   </div>
 
   <div class="col-6 col-lg-3">
-    <div class="stat-card stat-card-warning h-100">
+    <a href="{{ url_for('tasks.list_tasks', status='Em Andamento') }}" class="stat-card stat-card-warning h-100 text-decoration-none d-block">
       <div class="stat-icon"><i class="bi bi-hourglass-split"></i></div>
-      <div class="stat-value">{{ pending_tasks }}</div>
-      <div class="stat-label">Pendentes</div>
-    </div>
+      <div class="stat-value">{{ in_progress_tasks }}</div>
+      <div class="stat-label">Em Andamento</div>
+    </a>
   </div>
 
   <div class="col-6 col-lg-3">
-    <div class="stat-card stat-card-success h-100">
+    <a href="{{ url_for('tasks.list_tasks', status='Concluído') }}" class="stat-card stat-card-success h-100 text-decoration-none d-block">
       <div class="stat-icon"><i class="bi bi-check2-circle"></i></div>
       <div class="stat-value">{{ completed_tasks }}</div>
       <div class="stat-label">Concluídas</div>
-    </div>
+    </a>
   </div>
 
-  <div class="col-6 col-lg-3">
-    <div class="stat-card stat-card-danger h-100">
-      <div class="stat-icon"><i class="bi bi-exclamation-triangle"></i></div>
-      <div class="stat-value">{{ overdue_tasks }}</div>
-      <div class="stat-label">Vencidas</div>
-    </div>
-  </div>
+<div class="col-6 col-lg-3">
+  <a href="{{ url_for('tasks.list_tasks', overdue=1) }}" class="stat-card stat-card-danger h-100 text-decoration-none d-block">
+    <div class="stat-icon"><i class="bi bi-exclamation-triangle"></i></div>
+    <div class="stat-value">{{ overdue_tasks }}</div>
+    <div class="stat-label">Vencidas</div>
+  </a>
+</div>
 
 </div>
 
