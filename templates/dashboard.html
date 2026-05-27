@@ -15,18 +15,18 @@
 <div class="row g-3 mb-4">
 
   <div class="col-6 col-lg-3">
-    <a  href="{{ url_for('tasks.list_tasks', status='A Fazer') }}" class="stat-card stat-card-primary h-100 text-decoration-none d-block">
+    <a  href="{{ url_for('tasks.list_tasks') }}" class="stat-card stat-card-primary h-100 text-decoration-none d-block">
       <div class="stat-icon"><i class="bi bi-journals"></i></div>
-      <div class="stat-value">{{ todo_tasks }}</div>
-      <div class="stat-label">A Fazer</div>
+      <div class="stat-value">{{ total_tasks }}</div>
+      <div class="stat-label">Total de Tarefas</div>
     </a>
   </div>
 
   <div class="col-6 col-lg-3">
-    <a href="{{ url_for('tasks.list_tasks', status='Em Andamento') }}" class="stat-card stat-card-warning h-100 text-decoration-none d-block">
+    <a href="{{ url_for('tasks.list_tasks', pending=1) }}" class="stat-card stat-card-warning h-100 text-decoration-none d-block">
       <div class="stat-icon"><i class="bi bi-hourglass-split"></i></div>
-      <div class="stat-value">{{ in_progress_tasks }}</div>
-      <div class="stat-label">Em Andamento</div>
+      <div class="stat-value">{{ pending_tasks }}</div>
+      <div class="stat-label">Pendentes</div>
     </a>
   </div>
 
