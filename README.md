@@ -118,6 +118,11 @@ O projeto tem como objetivo aplicar conceitos estudados durante o curso, incluin
 * Controle de Versão com Git
 * Trabalho Colaborativo em Equipe
 
+## Hospedagem
+
+* No presente momento, disponibilizamos o Study Flow no link:
+    https://studyflow-vpp2.onrender.com/
+
 ## Integrantes
 
 * João Pedro de Oliveira Rodrigues
